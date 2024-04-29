@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estado Financiero</title>
-    <!-- Incluye Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Estado Financiero</h1>
-    <p id="balanceText"></p> <!-- Elemento para mostrar el texto del balance -->
+    <p id="balanceText"></p>
     <canvas id="financialChart" width="800" height="400"></canvas>
 
     <script>
@@ -18,10 +18,20 @@
         .then(response => response.json())
         .then(data => {
             // Extraer los datos necesarios para la gráfica
-            const gastos = data.Gastos;
+            let gastos = data.Gastos;
+            console.log(gastos);
             const ingresos = data.Ingresos;
-            const deudas = data.Deudas.filter(deuda => !deuda[5]);
-
+            /* si no existe deudas deudas despude de filtrar las deudas que ya fueron pagadas */
+            if (gastos=="No hay gastos") {
+                gastos = [];
+            }
+            let deudas = data.Deudas;
+            if (deudas=="No hay deudas") {
+                deudas = [];
+            }
+            else{
+                deudas = deudas.filter(deuda => !deuda[5]);
+            }
             // Calcular los totales de ingresos, gastos y deudas
             const ingresosTotal = ingresos.reduce((total, item) => total + item[3], 0);
             const gastosTotal = gastos.reduce((total, item) => total + item[3], 0);
@@ -52,14 +62,13 @@
                 data: {
                     labels: ['Ingresos', 'Gastos', 'Deudas'],
                     datasets: [{
-                        label: 'Ingresos',
+                        label: 'Monto',
                         data: [ingresosTotal, gastosTotal, deudasTotal],
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.2)', // Ingresos (azul)
                             'rgba(255, 99, 132, 0.2)', // Gastos (rojo)
                             'rgba(255, 206, 86, 0.2)'  // Deudas (amarillo)
                         ],
-                        
                         borderColor: [
                             'rgba(54, 162, 235, 1)',
                             'rgba(255, 99, 132, 1)',
@@ -78,11 +87,14 @@
                     },
                     title: {
                         display: true,
-                        text: 'Estado Financiero'
+                        text: `Balance: ${balance} (${status})`
                     }
                 }
             });
         });
     </script>
+    <div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('index') }}" class="button is-info">Volver al Dashboard</a>
+    </div>
 </body>
 </html>

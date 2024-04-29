@@ -45,7 +45,14 @@ def add_deuda():
         desde_cuando = request.form['desde_cuando']
         comentarios = request.form['comentarios']
         resuelto = request.form.get('resuelto')
-        resuelto = True if resuelto == 'true' else False
+        print(resuelto)
+        if resuelto is None:
+            resuelto = False
+        elif resuelto.lower() == 'on':
+            resuelto = True
+        else:
+            resuelto = False
+
         response = requests.post('http://localhost:3000/finanzas/Deudas/', json={"deudor": deudor, "cantidad": cantidad, "desde_cuando": desde_cuando, "comentarios": comentarios, "resuelto": resuelto})
         if response.status_code == 201:
             return redirect(url_for('deudas'))

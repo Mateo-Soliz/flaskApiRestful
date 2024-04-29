@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado Financiero</title>
+    <!-- Incluye Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Estado Financiero</h1>
+    <p id="balanceText"></p> <!-- Elemento para mostrar el texto del balance -->
+    <canvas id="financialChart" width="800" height="400"></canvas>
+
+    <script>
+        // Obtener los datos del servidor Flask
+        fetch('http://localhost:3000/finanzas/')
+        .then(response => response.json())
+        .then(data => {
+            // Extraer los datos necesarios para la gráfica
+            const gastos = data.Gastos;
+            const ingresos = data.Ingresos;
+            const deudas = data.Deudas.filter(deuda => !deuda[5]);
+
+            // Calcular los totales de ingresos, gastos y deudas
+            const ingresosTotal = ingresos.reduce((total, item) => total + item[3], 0);
+            const gastosTotal = gastos.reduce((total, item) => total + item[3], 0);
+            const deudasTotal = deudas.reduce((total, item) => total + item[2], 0);
+
+            // Calcular el balance
+            const balance = ingresosTotal - gastosTotal - deudasTotal;
+
+            // Determinar el estado financiero (positivo o negativo)
+            const status = balance >= 0 ? 'Positivo' : 'Negativo';
+            
+            // Determinar el texto del balance
+            const balanceText = balance >= 0 ? `Balance positivo por $${balance}` : `Balance negativo por -$${Math.abs(balance)}`;
+
+            // Mostrar el texto del balance en la página
+            document.getElementById('balanceText').innerText = balanceText;
+            document.getElementById('balanceText').style.color = balance >= 0 ? 'green' : 'red';
+            document.getElementById('balanceText').style.fontWeight = 'bold';
+            document.getElementById('balanceText').style.fontSize = '1.5em';
+            document.getElementById('balanceText').style.marginBottom = '20px';
+
+            // Crear la gráfica con Chart.js
+            document.getElementById('financialChart').style.marginBottom = '20px';
+            document.getElementById('financialChart').style.border = '1px solid #ccc';
+            const ctx = document.getElementById('financialChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ingresos', 'Gastos', 'Deudas'],
+                    datasets: [{
+                        label: 'Ingresos',
+                        data: [ingresosTotal, gastosTotal, deudasTotal],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)', // Ingresos (azul)
+                            'rgba(255, 99, 132, 0.2)', // Gastos (rojo)
+                            'rgba(255, 206, 86, 0.2)'  // Deudas (amarillo)
+                        ],
+                        
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Estado Financiero'
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -43,6 +43,7 @@
             <th>Cantidad</th>
             <th>Descripción</th>
             <th>Eliminar</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +60,8 @@
                 <td>${{ value['cantidad'] }}</td>
                 <td>{{ value['descripcion'] }}</td>
                 <td ><a href="{{ url_for('delete_ingreso', id=key) }}" class="button is-danger" style="width: 50% ; height: 40%">Eliminar</a></td>
-            </tr>
+                <td ><a href="{{ url_for('editar_ingreso', id=key) }}" class="button is-warning" style="width: 50% ; height: 40%">Editar</a></td>
+              </tr>
             {% endfor %}
             {% endif %}
         </tbody>
@@ -71,6 +73,7 @@
             <th>Cantidad</th>
             <th>Descripción</th>
             <th>Eliminar</th>
+            <th>Editar</th>
           </tr>
         </tfoot>
       </table>

@@ -93,7 +93,7 @@ class Todo(Resource):
             Gasto.cantidad = args['cantidad']
             Gasto.descripcion = args['descripcion']
             db.session.commit()
-            return {"id": Gasto.id, "fecha": Gasto.fecha, "concepto": Gasto.concepto, "cantidad": Gasto.cantidad, "descripcion": Gasto.descripcion}
+            return {"id": Gasto.id, "fecha": Gasto.fecha, "concepto": Gasto.concepto, "cantidad": Gasto.cantidad, "descripcion": Gasto.descripcion},200
         elif base_datos == 'Ingresos':
             args = parseador.parse_args()
             Ingreso = IngresosModal.query.filter_by(id=finanzas_id).first()
@@ -102,7 +102,7 @@ class Todo(Resource):
             Ingreso.cantidad = args['cantidad']
             Ingreso.descripcion = args['descripcion']
             db.session.commit()
-            return {"id": Ingreso.id, "fecha": Ingreso.fecha, "concepto": Ingreso.concepto, "cantidad": Ingreso.cantidad, "descripcion": Ingreso.descripcion}
+            return {"id": Ingreso.id, "fecha": Ingreso.fecha, "concepto": Ingreso.concepto, "cantidad": Ingreso.cantidad, "descripcion": Ingreso.descripcion},200
         elif base_datos == 'Deudas':
             args = parseador.parse_args()
             Deuda = DeudasModal.query.filter_by(id=finanzas_id).first()
@@ -112,7 +112,7 @@ class Todo(Resource):
             Deuda.comentarios = args['comentarios']
             Deuda.resuelto = args['resuelto']
             db.session.commit()
-            return {"id": Deuda.id, "deudor": Deuda.deudor, "cantidad": Deuda.cantidad, "desde_cuando": Deuda.desde_cuando, "comentarios": Deuda.comentarios, "resuelto": Deuda.resuelto}
+            return {"id": Deuda.id, "deudor": Deuda.deudor, "cantidad": Deuda.cantidad, "desde_cuando": Deuda.desde_cuando, "comentarios": Deuda.comentarios, "resuelto": Deuda.resuelto},200
     #delete: eliminar
     def delete(self, base_datos, finanzas_id):
         if base_datos == 'Gastos':

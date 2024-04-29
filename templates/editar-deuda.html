@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Añadir Deuda</title>
+    <title>Editar Deuda</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <!-- Agregar aquí cualquier otro enlace a estilos adicionales -->
     <style>
@@ -62,41 +62,43 @@
     <div class="container">
         <div class="form-container">
             <h2>Añadir Deuda</h2>
-            <form action="{{ url_for('add_deuda') }}" method="POST">
+            <form action="{{ url_for('editar_deuda', id=id) }}" method="POST">
                 <div class="field">
                     <label class="label" for="deudor">Deudor:</label>
                     <div class="control">
-                        <input class="input" type="text" id="deudor" name="deudor">
+                        <input class="input" type="text" id="deudor" name="deudor" value="{{ deuda['deudor'] }}">
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label" for="cantidad">Cantidad:</label>
                     <div class="control">
-                        <input class="input" type="number" id="cantidad" name="cantidad">
+                        <input class="input" type="number" id="cantidad" name="cantidad" value="{{ deuda['cantidad'] }}">
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label" for="desde_cuando">Desde Cuándo:</label>
                     <div class="control">
-                        <input class="input" type="date" id="desde_cuando" name="desde_cuando" value="{{ today }}">
+                        <input class="input" type="date" id="desde_cuando" name="desde_cuando" value="{{ deuda['desde_cuando'] }}">
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label" for="comentarios">Comentarios:</label>
                     <div class="control">
-                        <textarea class="textarea" id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
+                        <textarea class="textarea" id="comentarios" name="comentarios" rows="4" cols="50">{{ deuda['comentarios'] }}</textarea>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="checkbox" for="resuelto">
-                        <input type="checkbox" id="resuelto" name="resuelto">
+                        <input type="checkbox" id="resuelto" name="resuelto" {% if deuda['resuelto'] %}checked{% endif %} value="true">
                         Resuelto
                     </label>
                 </div>
+                
+                
 
                 <div class="field">
                     <div class="control">

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estado Financiero</title>
-    <!-- Incluye Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Estado Financiero</h1>
-    <p id="balanceText"></p> <!-- Elemento para mostrar el texto del balance -->
+    <p id="balanceText"></p>
     <canvas id="financialChart" width="800" height="400"></canvas>
 
     <script>
@@ -84,5 +84,8 @@
             });
         });
     </script>
+    <div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('index') }}" class="button is-info">Volver al Dashboard</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bulma</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css"
+    />
+
+    <style>
+      table.dataTable thead,
+      table.dataTable tfoot {
+        background-color: hsl(171, 100%, 41%);
+      }
+      .table thead th,
+      .table tfoot th {
+        color: hsl(0, 0%, 96%);
+      }
+    </style>
+  </head>
+  <body>
+    <main style="padding: 20px">
+    <div class="container is-fullhd">
+      <article class="tile is-child notification is-info">
+        <p class="title">Control de Gastos</p>
+      </article>
+      <table
+        id="example"
+        class="table is-striped is-hoverable"
+        style="width: 100%"
+      >
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if gastos.message == 'No hay gastos' %}
+            <tr>
+              <td colspan="5">No hay Gastos :D</td>
+            </tr>
+            {% else %}
+            {% for key, value in gastos.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value['fecha'] }}</td>
+                <td>{{ value['concepto'] }}</td>
+                <td>${{ value['cantidad'] }}</td>
+                <td>{{ value['descripcion'] }}</td>
+                <td ><a href="{{ url_for('delete_gasto', id=key) }}" class="button is-danger" style="width: 50% ; height: 40%">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Eliminar</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <a href="{{ url_for('add_gasto') }}" class="button is-primary">Añadir gasto</a>
+    <a href="{{ url_for('index')}}"  class="button is-primary">Inicio</a>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bulma.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#example").DataTable();
+      });
+    </script>
+  </body>
+</html>

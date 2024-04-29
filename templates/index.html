@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- Agregar aquí cualquier otro enlace a estilos adicionales -->
+    <style>
+        /* Estilos adicionales personalizados */
+        body {
+            background-color: #f8f9fa; /* Color de fondo */
+            background-image: url('https://mujeresquetransforman.com/wp-content/uploads/2022/03/businesspeople-working-in-finance-and-accounting-analyze-financi-1-min-1024x675.jpg'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Evita que el desenfoque se extienda más allá del cuerpo */
+        }
+
+        .buttons-container {
+            text-align: center;
+        }
+
+        .buttons-container .button {
+            margin: 10px;
+        }
+
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo del contenedor de botones */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main >
+
+        <div class="backgroundblur">
+            <div class="container">
+                <div class="buttons-container">
+                    <h1>Financial Dashboard</h1>
+                    <a href="{{ url_for('deudas') }}" class="button is-primary">Ir a Deudas</a>
+                    <a href="{{ url_for('gastos') }}" class="button is-info">Ir a Gastos</a>
+                    <a href="{{ url_for('ingresos') }}" class="button is-success">Ir a Ingresos</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
